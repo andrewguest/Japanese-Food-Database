@@ -1,4 +1,4 @@
-from api import db
+from app import db
 
 
 class Candy(db.Model):
@@ -11,4 +11,4 @@ class Candy(db.Model):
     image_path = db.Column(db.String(50))
 
     def __repr__(self):
-        return '<Candy {}>'.format(self.name)
+        return '<Candy: {}>'.format(self.name)
