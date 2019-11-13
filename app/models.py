@@ -2,6 +2,7 @@ from app import db
 
 
 class Candy(db.Model):
+    __tablename__ = "Candy"
     candy_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(150), unique=True)
     taste = db.Column(db.String(50))
