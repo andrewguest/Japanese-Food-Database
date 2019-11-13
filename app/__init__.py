@@ -14,4 +14,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://{}:{}@localhost/Japan'.format(m
 api = Api(app)
 db = SQLAlchemy(app)
 
-from app import models
+from app import models, routes
+
+api.add_resource(routes.GetAllJapanCandy, '/japan/candy/all')

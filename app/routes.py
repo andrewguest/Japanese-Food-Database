@@ -1,7 +1,7 @@
 from flask import jsonify
 from flask_restful import Resource
 
-from app import api, models
+from app import models
 
 
 class GetAllJapanCandy(Resource):
@@ -9,5 +9,3 @@ class GetAllJapanCandy(Resource):
         all_candy = models.Candy.query.all()
         return jsonify(all_candy)
 
-
-api.add_resource(GetAllJapanCandy, '/japan/candy/all')
