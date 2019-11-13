@@ -16,21 +16,21 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Current Database: `JapaneseTreats`
+-- Current Database: `Japan`
 --
 
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `JapaneseTreats` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `Japan` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 
-USE `JapaneseTreats`;
+USE `Japan`;
 
 --
--- Table structure for table `JapaneseCandy`
+-- Table structure for table `Candy`
 --
 
-DROP TABLE IF EXISTS `JapaneseCandy`;
+DROP TABLE IF EXISTS `Candy`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `JapaneseCandy` (
+CREATE TABLE `Candy` (
   `candy_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(150) NOT NULL,
   `taste` varchar(50) NOT NULL,
@@ -43,13 +43,13 @@ CREATE TABLE `JapaneseCandy` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `JapaneseCandy`
+-- Dumping data for table `Candy`
 --
 
-LOCK TABLES `JapaneseCandy` WRITE;
-/*!40000 ALTER TABLE `JapaneseCandy` DISABLE KEYS */;
-INSERT INTO `JapaneseCandy` VALUES (1,'Hakata Mitsuki: Delicious Cheese','sweet','Fukoka','https://www.bokksu.com/products/hakata-mitsuki-delicious-cheese-financier-cake','2019-11-11 19:12:04',NULL),(2,'Okashinai Cheese Manju','sweet','Akita','https://www.bokksu.com/products/okashinai-cheese-manju?_pos=1&_sid=ec069d388&_ss=r','2019-11-11 19:15:54',NULL),(3,'Black Sesame Taiko: Kumamon Design','sweet','Kumamoto','https://www.bokksu.com/products/black-sesame-taiko-rice-cracker?_pos=1&_sid=daf9f6b4c&_ss=r','2019-11-11 19:27:00',NULL),(4,'Kocha Black Tea Donut','sweet','Tokyo','https://www.bokksu.com/products/black-tea-donut?_pos=1&_sid=7ad26bcb2&_ss=r','2019-11-11 19:29:00',NULL),(5,'Kinako Kurumi Walnut Mochi','sweet','Nagano Prefecture','https://www.bokksu.com/products/kinako-walnut-mochi?_pos=1&_sid=5aa825ddc&_ss=r','2019-11-11 19:29:55',NULL),(6,'Sanrio Characters: Halloween Cookie Assort','sweet','Okayama Prefecture','https://www.bokksu.com/products/sanrio-cookie-assort?_pos=1&_sid=e07d5d4a3&_ss=r','2019-11-11 19:30:15',NULL),(7,'Puchi Pure Gummy: Halloween Grape','sweet','Tokyo','https://www.bokksu.com/products/pure-gummy-halloween-grape?_pos=1&_sid=fa0a616c1&_ss=r','2019-11-11 19:32:15',NULL),(8,'Cinnamon Fresh Yatsuhashi Daifuku','sweet','Nagano Prefecture','https://www.bokksu.com/products/nama-yatsuhashi-daifuku-mochi?_pos=1&_sid=30ca7f10e&_ss=r','2019-11-11 19:33:15',NULL),(9,'Fried Kakinotane: Kyoto Fresh Yatsuhashi Flavor','sweet','Osaka','https://www.bokksu.com/products/nama-yatsuhashi-kakino-tane?_pos=1&_sid=ad755a0a7&_ss=r','2019-11-11 19:34:15',NULL),(10,'Matcha Chocolate Stick Cake','sweet','Osaka','https://www.bokksu.com/products/matcha-chocolate-stick-cake?_pos=1&_sid=062a0490f&_ss=r','2019-11-11 19:35:15',NULL);
-/*!40000 ALTER TABLE `JapaneseCandy` ENABLE KEYS */;
+LOCK TABLES `Candy` WRITE;
+/*!40000 ALTER TABLE `Candy` DISABLE KEYS */;
+INSERT INTO `Candy` VALUES (1,'Hakata Mitsuki: Delicious Cheese','sweet','Fukoka','https://www.bokksu.com/products/hakata-mitsuki-delicious-cheese-financier-cake','2019-11-11 19:12:04',NULL),(2,'Okashinai Cheese Manju','sweet','Akita','https://www.bokksu.com/products/okashinai-cheese-manju?_pos=1&_sid=ec069d388&_ss=r','2019-11-11 19:15:54',NULL),(3,'Black Sesame Taiko: Kumamon Design','sweet','Kumamoto','https://www.bokksu.com/products/black-sesame-taiko-rice-cracker?_pos=1&_sid=daf9f6b4c&_ss=r','2019-11-11 19:27:00',NULL),(4,'Kocha Black Tea Donut','sweet','Tokyo','https://www.bokksu.com/products/black-tea-donut?_pos=1&_sid=7ad26bcb2&_ss=r','2019-11-11 19:29:00',NULL),(5,'Kinako Kurumi Walnut Mochi','sweet','Nagano Prefecture','https://www.bokksu.com/products/kinako-walnut-mochi?_pos=1&_sid=5aa825ddc&_ss=r','2019-11-11 19:29:55',NULL),(6,'Sanrio Characters: Halloween Cookie Assort','sweet','Okayama Prefecture','https://www.bokksu.com/products/sanrio-cookie-assort?_pos=1&_sid=e07d5d4a3&_ss=r','2019-11-11 19:30:15',NULL),(7,'Puchi Pure Gummy: Halloween Grape','sweet','Tokyo','https://www.bokksu.com/products/pure-gummy-halloween-grape?_pos=1&_sid=fa0a616c1&_ss=r','2019-11-11 19:32:15',NULL),(8,'Cinnamon Fresh Yatsuhashi Daifuku','sweet','Nagano Prefecture','https://www.bokksu.com/products/nama-yatsuhashi-daifuku-mochi?_pos=1&_sid=30ca7f10e&_ss=r','2019-11-11 19:33:15',NULL),(9,'Fried Kakinotane: Kyoto Fresh Yatsuhashi Flavor','sweet','Osaka','https://www.bokksu.com/products/nama-yatsuhashi-kakino-tane?_pos=1&_sid=ad755a0a7&_ss=r','2019-11-11 19:34:15',NULL),(10,'Matcha Chocolate Stick Cake','sweet','Osaka','https://www.bokksu.com/products/matcha-chocolate-stick-cake?_pos=1&_sid=062a0490f&_ss=r','2019-11-11 19:35:15',NULL);
+/*!40000 ALTER TABLE `Candy` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -162,7 +162,7 @@ CREATE TABLE `db` (
 
 LOCK TABLES `db` WRITE;
 /*!40000 ALTER TABLE `db` DISABLE KEYS */;
-INSERT INTO `db` VALUES ('%','JapaneseTreats','jptreats_user','Y','Y','Y','Y','Y','Y','N','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y');
+INSERT INTO `db` VALUES ('%','Japan','jptreats_user','Y','Y','Y','Y','Y','Y','N','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y');
 /*!40000 ALTER TABLE `db` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -448,7 +448,7 @@ CREATE TABLE `innodb_index_stats` (
 
 LOCK TABLES `innodb_index_stats` WRITE;
 /*!40000 ALTER TABLE `innodb_index_stats` DISABLE KEYS */;
-INSERT INTO `innodb_index_stats` VALUES ('JapaneseTreats','JapaneseCandy','PRIMARY','2019-11-12 01:34:42','n_diff_pfx01',9,1,'candy_id'),('JapaneseTreats','JapaneseCandy','PRIMARY','2019-11-12 01:34:42','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('JapaneseTreats','JapaneseCandy','PRIMARY','2019-11-12 01:34:42','size',1,NULL,'Number of pages in the index'),('mysql','gtid_slave_pos','PRIMARY','2019-11-11 23:16:33','n_diff_pfx01',0,1,'domain_id'),('mysql','gtid_slave_pos','PRIMARY','2019-11-11 23:16:33','n_diff_pfx02',0,1,'domain_id,sub_id'),('mysql','gtid_slave_pos','PRIMARY','2019-11-11 23:16:33','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','gtid_slave_pos','PRIMARY','2019-11-11 23:16:33','size',1,NULL,'Number of pages in the index');
+INSERT INTO `innodb_index_stats` VALUES ('Japan','Candy','PRIMARY','2019-11-12 01:34:42','n_diff_pfx01',9,1,'candy_id'),('Japan','Candy','PRIMARY','2019-11-12 01:34:42','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('Japan','Candy','PRIMARY','2019-11-12 01:34:42','size',1,NULL,'Number of pages in the index'),('mysql','gtid_slave_pos','PRIMARY','2019-11-11 23:16:33','n_diff_pfx01',0,1,'domain_id'),('mysql','gtid_slave_pos','PRIMARY','2019-11-11 23:16:33','n_diff_pfx02',0,1,'domain_id,sub_id'),('mysql','gtid_slave_pos','PRIMARY','2019-11-11 23:16:33','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','gtid_slave_pos','PRIMARY','2019-11-11 23:16:33','size',1,NULL,'Number of pages in the index');
 /*!40000 ALTER TABLE `innodb_index_stats` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -476,7 +476,7 @@ CREATE TABLE `innodb_table_stats` (
 
 LOCK TABLES `innodb_table_stats` WRITE;
 /*!40000 ALTER TABLE `innodb_table_stats` DISABLE KEYS */;
-INSERT INTO `innodb_table_stats` VALUES ('JapaneseTreats','JapaneseCandy','2019-11-12 01:34:42',9,1,0),('mysql','gtid_slave_pos','2019-11-11 23:16:33',0,1,0);
+INSERT INTO `innodb_table_stats` VALUES ('Japan','Candy','2019-11-12 01:34:42',9,1,0),('mysql','gtid_slave_pos','2019-11-11 23:16:33',0,1,0);
 /*!40000 ALTER TABLE `innodb_table_stats` ENABLE KEYS */;
 UNLOCK TABLES;
 
