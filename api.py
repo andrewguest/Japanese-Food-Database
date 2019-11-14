@@ -17,7 +17,9 @@ api = Api(app)
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
-
+#####################
+# SQLAlchemy models #
+#####################
 class Candy(db.Model):
     __tablename__ = 'Candy'
     candy_id = db.Column(db.Integer, primary_key=True, unique=True)
@@ -41,6 +43,9 @@ class Candy(db.Model):
         return "<Candy: {}>".format(self.name)
 
 
+#######################
+# Marshmallow Schemas #
+#######################
 class CandySchema(ma.ModelSchema):
     class Meta:
         model = Candy
@@ -49,12 +54,14 @@ class CandySchema(ma.ModelSchema):
 
 
 candy_schema = CandySchema()
-candies_schema = CandySchema(many=True)
 
 
-# endpoint to add new candy
+####################################
+# Defining flask_restful functions #
+####################################
 class GetAllJapanCandy(Resource):
     def get(self):
+        candies_schema = CandySchema(many=True)
         all_candy = Candy.query.all()
         result = candies_schema.dump(all_candy)
         return jsonify(result)
@@ -94,5 +101,7 @@ def user_delete(id):
 if __name__ == '__main__':
     app.run(debug=True)
 '''
-
+#################################################
+# API endpoints mapped to their Python function #
+#################################################
 api.add_resource(GetAllJapanCandy, '/japan/candy')
