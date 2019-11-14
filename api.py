@@ -27,7 +27,7 @@ class Candy(db.Model):
     url = db.Column(db.String(200))
     date_added = db.Column(db.DATETIME)
     image_path = db.Column(db.String(50))
-  
+
     def __init__(self, candy_id, name, taste, region, url, date_added, image_path):
         self.candy_id = candy_id
         self.name = name
@@ -60,28 +60,6 @@ class GetAllJapanCandy(Resource):
         return jsonify(result)
 
 '''
-# endpoint to create new user
-@app.route("/candy", methods=["POST"])
-def add_user():
-    name = request.json['name']
-    taste = request.json['taste']
-    
-    new_user = User(name, taste)
-
-    db.session.add(new_user)
-    db.session.commit()
-
-    return jsonify(new_user)
-
-
-# endpoint to show all users
-@app.route("/user", methods=["GET"])
-def get_user():
-    all_users = User.query.all()
-    result = users_schema.dump(all_users)
-    return jsonify(result.data)
-
-
 # endpoint to get user detail by id
 @app.route("/user/<id>", methods=["GET"])
 def user_detail(id):
