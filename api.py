@@ -60,6 +60,12 @@ class GetAllJapanCandy(Resource):
         result = candies_schema.dump(all_candy)
         return jsonify(result)
 
+
+class NotFound(Resource):
+    def get(self, invalidPath=''):
+        return jsonify(status=404, path=invalidPath, message="This URL is not a valid API endpoint")
+    
+
 '''
 # endpoint to get user detail by id
 @app.route("/user/<id>", methods=["GET"])
@@ -96,4 +102,5 @@ if __name__ == '__main__':
     app.run(debug=True)
 '''
 
-api.add_resource(GetAllJapanCandy, '/japan/candy')
+api.add_resource(GetAllJapanCandy, '/api/japan/candy')
+api.add_resource(NotFound, '/api/<path:invalidPath>')
