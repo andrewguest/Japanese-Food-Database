@@ -12,6 +12,7 @@ mysql_name = getenv('MYSQL_USERNAME')
 mysql_password = getenv('MYSQL_PASSWORD')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://{}:{}@localhost/Japan'.format(mysql_name, mysql_password)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_POOL_RECYCLE'] = 500
 
 api = Api(app)
 db = SQLAlchemy(app)
