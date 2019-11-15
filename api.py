@@ -1,6 +1,6 @@
 from os import getenv
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_restful import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
@@ -12,14 +12,13 @@ mysql_name = getenv('MYSQL_USERNAME')
 mysql_password = getenv('MYSQL_PASSWORD')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://{}:{}@localhost/Japan'.format(mysql_name, mysql_password)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_POOL_RECYCLE'] = 500
 
 api = Api(app)
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
-#####################
-# SQLAlchemy models #
-#####################
+
 class Candy(db.Model):
     __tablename__ = 'Candy'
     candy_id = db.Column(db.Integer, primary_key=True, unique=True)
@@ -43,9 +42,6 @@ class Candy(db.Model):
         return "<Candy: {}>".format(self.name)
 
 
-#######################
-# Marshmallow Schemas #
-#######################
 class CandySchema(ma.ModelSchema):
     class Meta:
         model = Candy
@@ -54,17 +50,27 @@ class CandySchema(ma.ModelSchema):
 
 
 candy_schema = CandySchema()
+candies_schema = CandySchema(many=True)
 
 
-####################################
-# Defining flask_restful functions #
-####################################
-class GetAllJapanCandy(Resource):
+# endpoint to add new candy
+class AllJapanCandy(Resource):
     def get(self):
-        candies_schema = CandySchema(many=True)
         all_candy = Candy.query.all()
         result = candies_schema.dump(all_candy)
         return jsonify(result)
+
+
+class SingleJapanCandy(Resource):
+    def put(self, candyInput):
+        name = request.form['name']
+        return jsonify(candyName=name)
+
+
+class NotFound(Resource):
+    def get(self, invalidPath=''):
+        return jsonify(status=404, path=invalidPath, message="This URL is not a valid API endpoint")
+
 
 '''
 # endpoint to get user detail by id
@@ -101,7 +107,7 @@ def user_delete(id):
 if __name__ == '__main__':
     app.run(debug=True)
 '''
-#################################################
-# API endpoints mapped to their Python function #
-#################################################
-api.add_resource(GetAllJapanCandy, '/japan/candy')
+
+api.add_resource(AllJapanCandy, '/api/japan/candy/all')
+api.add_resource(SingleJapanCandy, '/api/japan/candy')
+api.add_resource(NotFound, '/api/<path:invalidPath>')
