@@ -38,7 +38,7 @@ class AllJapanCandy(Resource):
         all_candy = models.Candy.query.all()
         result = candies_schema.dump(all_candy)
         return jsonify(result)
-
+ 
 
 class SingleJapanCandy(Resource):
     def put(self):
