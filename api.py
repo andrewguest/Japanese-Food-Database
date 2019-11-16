@@ -1,6 +1,7 @@
 from os import getenv
+from datetime import datetime
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify
 from flask_restful import Resource, Api, reqparse
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
@@ -64,9 +65,20 @@ class AllJapanCandy(Resource):
 
 class SingleJapanCandy(Resource):
     def put(self):
-        parser.add_argument('name', type=str)
+        parser.add_argument('name', type=str, required=True)
+        parser.add_argument('taste', type=str, required=True)
+        parser.add_argument('region', type=str, required=True)
+        parser.add_argument('url', type=str, required=True)
+        parser.add_argument('image_path', type=str)
+        current_time = datetime.now()
+        
         args = parser.parse_args()
-        return jsonify(candyName=args['name'])
+        args['date_added'] = current_time.strftime("%Y-%m-%d %H:%M:%S")
+
+        return jsonify(name=args['name'], taste=args['taste'],
+                       region=args['region'], url=args['url'],
+                       image_path=args['image_path'],
+                       date_added=args['date_added'])
 
 
 class NotFound(Resource):
