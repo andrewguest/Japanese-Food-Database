@@ -1,7 +1,7 @@
 from os import getenv
 from datetime import datetime
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_restful import Resource, Api, reqparse
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
@@ -17,7 +17,6 @@ ma = Marshmallow(app)
 # Cross Origin Resource Sharing (CORS) configuration #
 ######################################################
 CORS(app, resources={r"/api/*": {"origins": "*"}})
-
 
 
 mysql_name = getenv('MYSQL_USERNAME')
@@ -47,10 +46,11 @@ class AllJapanCandy(Resource):
         all_candy = models.Candy.query.all()
         result = candies_schema.dump(all_candy)
         return jsonify(result)
- 
+
 
 class SingleJapanCandy(Resource):
-    def put(self):
+    def post(self):
+
         parser.add_argument('name', type=str, required=True)
         parser.add_argument('taste', type=str, required=True)
         parser.add_argument('region', type=str, required=True)
@@ -69,10 +69,11 @@ class SingleJapanCandy(Resource):
         db.session.add(new_candy)
         db.session.commit()
 
-        return jsonify(name=args['name'], taste=args['taste'],
-                       region=args['region'], url=args['url'],
-                       image_path=args['image_path'],
-                       date_added=args['date_added'])
+        # return jsonify(name=args['name'], taste=args['taste'],
+        #               region=args['region'], url=args['url'],
+        #               image_path=args['image_path'],
+        #               date_added=args['date_added'])
+        return jsonify(request.form['data'])
 
 
 class NotFound(Resource):
