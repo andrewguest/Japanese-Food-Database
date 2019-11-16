@@ -1,7 +1,7 @@
 from os import getenv
 
 from flask import Flask, jsonify, request
-from flask_restful import Resource, Api
+from flask_restful import Resource, Api, reqparse
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 
@@ -51,6 +51,7 @@ class CandySchema(ma.ModelSchema):
 
 candy_schema = CandySchema()
 candies_schema = CandySchema(many=True)
+parser = reqparse.RequestParser()
 
 
 # endpoint to add new candy
@@ -62,9 +63,10 @@ class AllJapanCandy(Resource):
 
 
 class SingleJapanCandy(Resource):
-    def put(self, candyInput):
-        name = request.form['name']
-        return jsonify(candyName=name)
+    def put(self):
+        parser.add_argument('name', type=str)
+        args = parser.parse_args()
+        return jsonify(candyName=args['name'])
 
 
 class NotFound(Resource):
