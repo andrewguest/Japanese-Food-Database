@@ -3,7 +3,7 @@ from api import db
 
 class Candy(db.Model):
     __tablename__ = 'Candy'
-    candy_id = db.Column(db.Integer, primary_key=True, unique=True)
+    candy_id = db.Column(db.Integer, primary_key=True, unique=True, autoincrement=True)
     name = db.Column(db.String(150))
     taste = db.Column(db.String(50))
     region = db.Column(db.String(50))
@@ -11,9 +11,8 @@ class Candy(db.Model):
     date_added = db.Column(db.DATETIME)
     image_path = db.Column(db.String(50))
 
-    def __init__(self, candy_id, name, taste, region,
+    def __init__(self, name, taste, region,
                  url, date_added, image_path):
-        self.candy_id = candy_id
         self.name = name
         self.taste = taste
         self.region = region

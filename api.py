@@ -6,8 +6,6 @@ from flask_restful import Resource, Api, reqparse
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 
-import models
-
 
 app = Flask(__name__)
 mysql_name = getenv('MYSQL_USERNAME')
@@ -21,20 +19,20 @@ api = Api(app)
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
+#####################################################
+# These are imported here to avoid circular imports #
+#####################################################
+import models
+import schema
 
-class CandySchema(ma.ModelSchema):
-    class Meta:
-        model = models.Candy
-        # Fields to expose
-        # fields = ('name', 'taste', 'region', 'url', 'date_added')
-
-
-candy_schema = CandySchema()
-candies_schema = CandySchema(many=True)
+candy_schema = schema.CandySchema()
+candies_schema = schema.CandySchema(many=True)
 parser = reqparse.RequestParser()
 
 
-# endpoint to add new candy
+############################################
+# Functions that the API endpoints trigger #
+############################################
 class AllJapanCandy(Resource):
     def get(self):
         all_candy = models.Candy.query.all()
@@ -70,9 +68,13 @@ class SingleJapanCandy(Resource):
 
 class NotFound(Resource):
     def get(self, invalidPath=''):
-        return jsonify(status=404, path=invalidPath, message="This URL is not a valid API endpoint")
+        return jsonify(status=404, path=invalidPath,
+                       message="This URL is not a valid API endpoint")
 
 
+##############################################
+# Defining API endpoints and their functions #
+##############################################
 api.add_resource(AllJapanCandy, '/api/japan/candy/all')
 api.add_resource(SingleJapanCandy, '/api/japan/candy')
 api.add_resource(NotFound, '/api/<path:invalidPath>')
