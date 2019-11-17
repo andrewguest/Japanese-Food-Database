@@ -1,7 +1,12 @@
-from api import ma
 import models
+from api import ma
 
 
-class CandySchema(ma.ModelSchema):
+class FoodSchema(ma.ModelSchema):
     class Meta:
-        model = models.Candy
+        model = models.Food
+
+
+class DrinkSchema(ma.ModelSchema):
+    class Meta:
+        model = models.Drink

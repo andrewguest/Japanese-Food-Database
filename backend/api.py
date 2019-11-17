@@ -1,11 +1,11 @@
-from os import getenv
-from datetime import datetime
+import os
 
-from flask import Flask, jsonify, request
-from flask_restful import Resource, Api, reqparse
+from flask import Flask
+from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_cors import CORS
+from flask_jwt_extended import JWTManager
 
 
 app = Flask(__name__)
@@ -13,18 +13,26 @@ api = Api(app)
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('JAWSDB_MARIA_URL')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_POOL_RECYCLE'] = 500
+app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
+app.config['JWT_BLACKLIST_ENABLED'] = True
+app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']
+
+jwt = JWTManager(app)
+
+
+@jwt.token_in_blacklist_loader
+def check_if_token_in_blacklist(decrypted_token):
+    jti = decrypted_token['jti']
+    return models.RevokedTokenModel.is_jti_blacklisted(jti)
+
+
 ######################################################
 # Cross Origin Resource Sharing (CORS) configuration #
 ######################################################
 CORS(app, resources={r"/api/*": {"origins": "*"}})
-
-
-mysql_name = getenv('MYSQL_USERNAME')
-mysql_password = getenv('MYSQL_PASSWORD')
-
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://{}:{}@localhost/Japan'.format(mysql_name, mysql_password)
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_POOL_RECYCLE'] = 500
 
 
 #####################################################
@@ -32,59 +40,26 @@ app.config['SQLALCHEMY_POOL_RECYCLE'] = 500
 #####################################################
 import models
 import schema
-
-candy_schema = schema.CandySchema()
-candies_schema = schema.CandySchema(many=True)
-parser = reqparse.RequestParser()
+import resources
 
 
-############################################
-# Functions that the API endpoints trigger #
-############################################
-class AllJapanCandy(Resource):
-    def get(self):
-        all_candy = models.Candy.query.all()
-        result = candies_schema.dump(all_candy)
-        return jsonify(result)
-
-
-class SingleJapanCandy(Resource):
-    def post(self):
-
-        parser.add_argument('name', type=str, required=True)
-        parser.add_argument('taste', type=str, required=True)
-        parser.add_argument('region', type=str, required=True)
-        parser.add_argument('url', type=str, required=True)
-        parser.add_argument('image_path', type=str)
-        current_time = datetime.now()
-
-        args = parser.parse_args()
-        args['date_added'] = current_time.strftime("%Y-%m-%d %H:%M:%S")
-
-        new_candy = models.Candy(name=args['name'], taste=args['taste'],
-                                 region=args['region'], url=args['url'],
-                                 image_path=args['image_path'],
-                                 date_added=args['date_added'])
-
-        db.session.add(new_candy)
-        db.session.commit()
-
-        # return jsonify(name=args['name'], taste=args['taste'],
-        #               region=args['region'], url=args['url'],
-        #               image_path=args['image_path'],
-        #               date_added=args['date_added'])
-        return jsonify(request.form['data'])
-
-
-class NotFound(Resource):
-    def get(self, invalidPath=''):
-        return jsonify(status=404, path=invalidPath,
-                       message="This URL is not a valid API endpoint")
+@app.before_first_request
+def create_tables():
+    db.create_all()
 
 
 ##############################################
 # Defining API endpoints and their functions #
 ##############################################
-api.add_resource(AllJapanCandy, '/api/japan/candy/all')
-api.add_resource(SingleJapanCandy, '/api/japan/candy')
-api.add_resource(NotFound, '/api/<path:invalidPath>')
+api.add_resource(resources.AllJapanFood, '/api/japan/food/all')
+api.add_resource(resources.SingleJapanFood, '/api/japan/food')
+
+api.add_resource(resources.AllJapanDrinks, '/api/japan/drinks/all')
+
+api.add_resource(resources.UserRegistration, '/api/registration')
+api.add_resource(resources.UserLogin, '/api/login')
+api.add_resource(resources.UserLogoutAccess, '/api/logout/access')
+api.add_resource(resources.UserLogoutRefresh, '/api/logout/refresh')
+api.add_resource(resources.TokenRefresh, '/api/token/refresh')
+
+api.add_resource(resources.NotFound, '/api/<path:invalidPath>')
