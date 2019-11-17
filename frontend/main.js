@@ -1,17 +1,20 @@
 var app = new Vue({
-    el: '#vueForm',
+    el: '#apiData',
     data: {
-        form: {
-            name: '',
-            region: '',
-            taste: '',
-            url: ''
+        foodResults: [],
+        drinkResults: []
+    },
+    filters: {
+        capitalize: function (value) {
+            if (!value) return ''
+            value = value.toString()
+            return value.charAt(0).toUpperCase() + value.slice(1)
         }
     },
-    options: {
-        taste_options: [
-            { value: 'sweet', text: 'Sweet' },
-            { value: 'savory', text: 'Savory' }
-        ]
+    mounted() {
+        axios.get("https://bokksu-favorites.herokuapp.com/api/japan/food/all")
+        .then(response => {this.foodResults = response.data}),
+        axios.get("https://bokksu-favorites.herokuapp.com/api/japan/drinks/all")
+        .then(response => {this.drinkResults = response.data})
     }
-})
+});

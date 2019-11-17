@@ -6,7 +6,6 @@
         <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-        <link rel="stylesheet" type="text/css" href="custom.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
         
         <link href="https://fonts.googleapis.com/css?family=M+PLUS+1p&display=swap" rel="stylesheet">
@@ -16,137 +15,74 @@
     </head>
     <body>
         <section class="section">
-            <br />
-            <br />
             <div class="container">
-                <div class="columns" id="vueForm">
-                    <div class="column is-3"></div>
-                    <div class="column is-6" style="text-align: center;" id="form">
-                        <h1 id="formTitle">日本のキャンディー</h1>
-                        <br />
-                        <br />
-                        <div class="columns">
-                            <div class="column is-offset-1 is-10">
-                                <div class="field is-horizontal">
-                                    <div class="field-label is-normal">
-                                        <label class="label">Name</label>
-                                    </div>
-                                    <div class="field-body">
-                                        <div class="field">
-                                            <p class="control is-expanded has-icons-left">
-                                                <input v-model="form.name" class="input" type="text" placeholder="Snack Name">
-                                                <span class="icon is-small is-left">
-                                                    <i class="fas fa-utensils"></i>
-                                                </span>
-                                            </p>
-                                        </div>
-                                    </div>
+                <div class="columns" id="apiData">
+                    <div class="column is-6">
+                        <article class="media" v-for="food in foodResults">
+                            <figure class="media-left">
+                                <p class="image is-128x128">
+                                    <img :src="food.image_path">
+                                </p>
+                            </figure>
+                            <div class="media-content">
+                                <div class="field">
+                                    <table class="table">
+                                        <tr>
+                                            <td><b>Name:</b></td>
+                                            <td>{{ food.name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Taste:</b></td>
+                                            <td>{{ food.taste | capitalize }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Region:</b></td>
+                                            <td>{{ food.region }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Link:</b></td>
+                                            <td><a :href="food.url" target="_blank">Buy from here!</a></td>
+                                        </tr>
+                                    </table>
                                 </div>
-
-                                <div class="field is-horizontal">
-                                    <div class="field-label is-normal">
-                                        <label class="label">Region</label>
-                                    </div>
-                                    <div class="field-body">
-                                        <div class="field">
-                                            <p class="control is-expanded has-icons-left">
-                                                <input v-model="form.region" class="input" type="text" placeholder="Region">
-                                                <span class="icon is-small is-left">
-                                                    <i class="fas fa-map-marker-alt"></i>
-                                                </span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                              
-                                <div class="field is-horizontal">
-                                    <div class="field-label is-normal">
-                                        <label class="label">Taste</label>
-                                    </div>
-                                    <div class="field-body">
-                                        <div class="field is-narrow">
-                                            <div class="control">
-                                                <div class="select is-fullwidth">
-                                                    <select v-model="form.taste">
-                                                        <option>Sweet</option>
-                                                        <option>Savory</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                              
-                                <div class="field is-horizontal">
-                                    <div class="field-label is-normal">
-                                        <label class="label">URL</label>
-                                    </div>
-                                    <div class="field-body">
-                                        <div class="field">
-                                            <p class="control is-expanded has-icons-left">
-                                                <input v-model="form.url" class="input" type="text" placeholder="URL">
-                                                <span class="icon is-small is-left">
-                                                    <i class="fas fa-link"></i>
-                                                </span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <br />
-                              
-                                <div class="field is-horizontal is-centered">
-                                    <div class="field-label">
-                                    </div>
-                                    <div class="field-body">
-                                        <div class="field">
-                                            <div class="control has-text-centered">
-                                                <button class="button is-info" @click="addNewCandy()">
-                                                    Add Food
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <br />
-                                <br />
                             </div>
-                        </div>
+                        </article>
+                    </div>
+
+                    <div class="column is-6">
+                        <article class="media" v-for="drink in drinkResults">
+                            <figure class="media-left">
+                                <p class="image is-128x128">
+                                    <img :src="drink.image_path">
+                                </p>
+                            </figure>
+                            <div class="media-content">
+                                <div class="field">
+                                    <table class="table">
+                                        <tr>
+                                            <td><b>Name:</b></td>
+                                            <td>{{ drink.name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Taste:</b></td>
+                                            <td>{{ drink.taste | capitalize }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Region:</b></td>
+                                            <td>{{ drink.region }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Link:</b></td>
+                                            <td><a :href="drink.url" target="_blank">Buy from here!</a></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </article>
                     </div>
                 </div>
             </div>
         </section>
-
-        <script>
-            var app = new Vue({
-                el: '#vueForm',
-                data: {
-                    form: {
-                        name: '',
-                        region: '',
-                        taste: '',
-                        url: '',
-                    }
-                },
-                methods: {
-                    addNewCandy(){
-                        axios.post('http://192.168.1.103:5000/api/japan/candy', {
-                            name: this.form.name,
-                            region: this.form.region,
-                            taste: this.form.taste,
-                            url: this.form.url
-                        }).then((response) => {})
-                        .catch((e) => {
-                            console.log(this.form.name),
-                            console.log(this.form.region),
-                            console.log(this.form.taste),
-                            console.log(this.form.url),
-                            console.log(e.response.data)
-                            console.log(e.response)
-                        })
-                    }
-                }
-            })
-        </script>
+        <script src="main.js"></script>
     </body>
 </html>
