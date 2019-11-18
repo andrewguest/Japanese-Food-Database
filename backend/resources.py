@@ -1,9 +1,9 @@
 from datetime import datetime
 
 from flask_restful import Resource, reqparse
-from flask import jsonify
+from flask import jsonify, json
 
-from api import db
+from api import db, app
 from schema import FoodSchema, DrinkSchema
 from models import Food, Drink
 
@@ -71,5 +71,7 @@ class AllJapanDrinks(Resource):
 ##################################################
 class NotFound(Resource):
     def get(self, invalidPath=''):
-        return jsonify(status=404, path=invalidPath,
-                       message="This URL is not a valid API endpoint")
+        data = {'path': invalidPath, 'message': 'This URL is not a valid API endpoint'}
+        return app.response_class(response=json.dumps(data),
+                                  status=404,
+                                  mimetype='application/json')
