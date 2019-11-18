@@ -12,7 +12,11 @@ api = Api(app)
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('JAWSDB_MARIA_URL')
+mariadb_uri = 'mysql://{username}:{password}@localhost/Japan'.format(
+               username=os.getenv('MYSQL_USERNAME'),
+               password=os.getenv('MYSQL_PASSWORD'))
+
+app.config['SQLALCHEMY_DATABASE_URI'] = mariadb_uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_POOL_RECYCLE'] = 500
 
