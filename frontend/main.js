@@ -12,9 +12,9 @@ var app = new Vue({
         }
     },
     mounted() {
-        axios.get("http://localhost:5000/api/japan/food/all")
+        axios.get("http://food.myjapandb.com:5000/api/japan/food/all")
         .then(response => {this.foodResults = response.data}),
-        axios.get("http://localhost:5000/api/japan/drinks/all")
+        axios.get("http://food.myjapandb.com:5000/api/japan/drinks/all")
         .then(response => {this.drinkResults = response.data})
     }
 });
