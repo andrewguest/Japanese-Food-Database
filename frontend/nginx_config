@@ -1,0 +1,15 @@
+server {
+  listen 80 default_server;
+  listen [::]:80 default_server;
+
+  root /var/www/Japanese-Food-Database/frontend;
+
+  index index.html;
+
+  server_name food.myjapandb.com  www.food.myjapandb.com;
+
+  location / {
+
+    try_files $uri $uri/ =404;
+  }
+}
