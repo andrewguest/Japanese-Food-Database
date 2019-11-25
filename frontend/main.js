@@ -11,7 +11,7 @@ var app = new Vue({
             return value.charAt(0).toUpperCase() + value.slice(1)
         }
     },
-    mounted() {
+    beforeMount() {
         axios.get("http://api.myjapandb.com/api/japan/food/all")
         .then(response => {this.foodResults = response.data}),
         axios.get("http://api.myjapandb.com/api/japan/drinks/all")
