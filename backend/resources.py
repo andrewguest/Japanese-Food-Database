@@ -23,16 +23,20 @@ drinks_schema = DrinkSchema(many=True)
 ######################################
 # 'Food' functions for API endpoints #
 ######################################
-class AllJapanFood(Resource):
+class AllFood(Resource):
     def get(self):
         all_food = Food.query.all()
         result = foods_schema.dump(all_food)
         return jsonify(result)
 
 
-class SingleJapanFood(Resource):
-    def post(self):
+class SingleFood(Resource):
+    def get(self, food_id):
+        food_entry = Food.query.filter_by(food_id=food_id)
+        result = food_schema.dump(food_entry)
+        return jsonify(result)
 
+    def post(self):
         parser.add_argument("key", type=str, required=True)
         parser.add_argument("name", type=str, required=True)
         parser.add_argument("taste", type=str, required=True)
@@ -65,6 +69,8 @@ class SingleJapanFood(Resource):
             db.session.close()
 
             return jsonify(
+                status=200,
+                message="Successfully added FOOD entry to the database:",
                 name=args["name"],
                 taste=args["taste"],
                 region=args["region"],
@@ -77,11 +83,61 @@ class SingleJapanFood(Resource):
 #######################################
 # 'Drink' functions for API endpoints #
 #######################################
-class AllJapanDrinks(Resource):
+class AllDrinks(Resource):
     def get(self):
         all_drinks = Drink.query.all()
         result = drinks_schema.dump(all_drinks)
         return jsonify(result)
+
+
+class SingleDrink(Resource):
+    def get(self, drink_id):
+        drink_entry = Drink.query.filter_by(drink_id=drink_id)
+        result = drink_schema.dump(drink_entry)
+        return jsonify(result)
+
+    def post(self):
+        parser.add_argument("key", type=str, required=True)
+        parser.add_argument("name", type=str, required=True)
+        parser.add_argument("taste", type=str, required=True)
+        parser.add_argument("region", type=str, required=True)
+        parser.add_argument("url", type=str, required=True)
+        parser.add_argument("image_path", type=str)
+        current_time = datetime.now()
+
+        args = parser.parse_args()
+
+        if args["key"] != os.getenv("API_KEY") or args["key"] is None:
+            data = {"message": "Unauthorized"}
+            return app.response_class(
+                response=json.dumps(data), status=401, mimetype="application/json",
+            )
+        else:
+            args["date_added"] = current_time.strftime("%Y-%m-%d %H:%M:%S")
+
+            new_drink = Drink(
+                name=args["name"],
+                taste=args["taste"],
+                region=args["region"],
+                url=args["url"],
+                image_path=args["image_path"],
+                date_added=args["date_added"],
+            )
+
+            db.session.add(new_drink)
+            db.session.commit()
+            db.session.close()
+
+            return jsonify(
+                status=200,
+                message="Successfully added DRINK entry to the database:",
+                name=args["name"],
+                taste=args["taste"],
+                region=args["region"],
+                url=args["url"],
+                image_path=args["image_path"],
+                date_added=args["date_added"],
+            )
 
 
 ##################################################

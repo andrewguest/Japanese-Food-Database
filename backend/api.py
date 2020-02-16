@@ -12,18 +12,19 @@ app = Flask(__name__)
 api = Api(app)
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
-logging.basicConfig(filename='/var/log/food-myjapandb.log',
-                    level=logging.DEBUG,
-                    format='%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s'
-                    )
+logging.basicConfig(
+    filename="/var/log/food-myjapandb.log",
+    level=logging.DEBUG,
+    format="%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s",
+)
 
-mariadb_uri = 'mysql://{username}:{password}@localhost/Japan'.format(
-    username=os.getenv('MYSQL_USERNAME'),
-    password=os.getenv('MYSQL_PASSWORD'))
+mariadb_uri = "mysql://{username}:{password}@localhost/Japan".format(
+    username=os.getenv("MYSQL_USERNAME"), password=os.getenv("MYSQL_PASSWORD")
+)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = mariadb_uri
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_POOL_RECYCLE'] = 500
+app.config["SQLALCHEMY_DATABASE_URI"] = mariadb_uri
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["SQLALCHEMY_POOL_RECYCLE"] = 500
 
 ######################################################
 # Cross Origin Resource Sharing (CORS) configuration #
@@ -47,9 +48,10 @@ def create_tables():
 ##############################################
 # Defining API endpoints and their functions #
 ##############################################
-api.add_resource(resources.AllJapanFood, '/api/japan/food/all')
-api.add_resource(resources.SingleJapanFood, '/api/japan/food')
+api.add_resource(resources.AllFood, "/v1/food/all")
+api.add_resource(resources.SingleFood, "/v1/food/<int:food_id>")
 
-api.add_resource(resources.AllJapanDrinks, '/api/japan/drinks/all')
+api.add_resource(resources.AllDrinks, "/v1/drink/all")
+api.add_resource(resources.SingleDrink, "/v1/drink/<int:drink_id>")
 
-api.add_resource(resources.NotFound, '/api/<path:invalidPath>')
+api.add_resource(resources.NotFound, "/v1/<path:invalidPath>")
