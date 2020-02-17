@@ -92,7 +92,7 @@ class AllDrinks(Resource):
 
 class SingleDrink(Resource):
     def get(self, drink_id):
-        drink_entry = Drink.query.filter_by(drink_id=drink_id)
+        drink_entry = Drink.query.filter_by(drink_id=drink_id).limit(1)
         result = drink_schema.dump(drink_entry)
         return jsonify(result)
 
