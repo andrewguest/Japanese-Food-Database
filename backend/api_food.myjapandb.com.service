@@ -9,7 +9,7 @@ WorkingDirectory=/var/www/Japanese-Food-Database/backend
 Environment="PATH=/var/www/Japanese-Food-Database/backend/venv/bin"
 Environment=MYSQL_USERNAME=<YOUR_API_USERS_NAME_HERE>
 Environment=MYSQL_PASSWORD=<YOUR_API_Users_PASSWORD_HERE>
-ExecStart=/var/www/Japanese-Food-Database/backend/venv/bin/gunicorn --workers 2 --bind 0.0.0.0:5000 api:app
+ExecStart=/var/www/Japanese-Food-Database/backend/venv/bin/gunicorn --workers 2 --bind 127.0.0.1:5000 api:app
 
 [Install]
 WantedBy=multi-user.target

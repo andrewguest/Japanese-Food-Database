@@ -1,9 +1,54 @@
+# The Job Lifecycle
+
+# Each job is a sequence of phases. The main phases are:
+#
+#     install - install any dependencies required
+#     script - run the build script
+
+# Travis CI can run custom commands in the phases:
+#
+#     before_install - before the install phase
+#     before_script - before the script phase
+#     after_script - after the script phase.
+#     after_success - when the build succeeds (e.g. building documentation), the result is in TRAVIS_TEST_RESULT environment variable
+#     after_failure - when the build fails (e.g. uploading log files), the result is in TRAVIS_TEST_RESULT environment variable
+#
+# There are three optional deployment phases.
+
+# The complete sequence of phases of a job is the lifecycle. The steps are:
+#
+#     OPTIONAL Install apt addons
+#     OPTIONAL Install cache components
+#     before_install
+#     install
+#     before_script
+#     script
+#     OPTIONAL before_cache (for cleaning up cache)
+#     after_success or after_failure
+#     OPTIONAL before_deploy
+#     OPTIONAL deploy
+#     OPTIONAL after_deploy
+#     after_script
+
+# What programming language is this code written in
 language: python
+
+# List of operating systems to test on
+# Since this runs on an Ubuntu Server VM, I only care about testing Linux
+os: linux
+
+# List of all of the different version of Python to test on
+# If all these pass, then you can run this project with any of these Python versions
 python:
   - "3.5"
   - "3.6"
   - "3.7"
   - "3.8"
+ 
+# Install any dependencies needed
 install:
   - pip install -r backend/requirements.txt
-script: pytest
+
+# The test script for Travis CI to run
+# If this exits with a non-zero return code, then the build is considered "failed"
+script: utils/pytest
