@@ -12,7 +12,7 @@ python:
   - "3.6"
   - "3.7"
   - "3.8"
-
+ 
 # Install any dependencies needed
 install:
   - pip install -r backend/requirements.txt
