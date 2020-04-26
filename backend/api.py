@@ -44,6 +44,7 @@ def create_tables():
 ##############################################
 api.add_resource(resources.AllFood, "/v1/food/all")
 api.add_resource(resources.SingleFood, "/v1/food/<int:food_id>")
+api.add_resource(resources.FoodLimit, "/v1/food/limit/<int:number_of_results>")
 
 api.add_resource(resources.AllDrinks, "/v1/drink/all")
 api.add_resource(resources.SingleDrink, "/v1/drink/<int:drink_id>")
