@@ -12,10 +12,11 @@ python:
   - "3.6"
   - "3.7"
   - "3.8"
- 
+
 # Install any dependencies needed
 install:
-  - pip install -r backend/requirements.txt
+  - pip install pipenv
+  - pipenv install
 
 # The test script for Travis CI to run
 # If this exits with a non-zero return code, then the build is considered "failed"
