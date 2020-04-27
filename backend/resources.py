@@ -30,6 +30,13 @@ class AllFood(Resource):
         return jsonify(result)
 
 
+class FoodLimit(Resource):
+    def get(self, number_of_results):
+        results = Food.query.limit(number_of_results).all()
+        data = foods_schema.dump(results)
+        return jsonify(data)
+
+
 class SingleFood(Resource):
     def get(self, food_id):
         food_entry = Food.query.filter_by(food_id=food_id)
