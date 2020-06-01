@@ -1,4 +1,4 @@
-from api import db
+from api import db, ma
 
 
 class Food(db.Model):
@@ -10,8 +10,7 @@ class Food(db.Model):
     date_added = db.Column(db.DATETIME)
     image_path = db.Column(db.String(50))
 
-    def __init__(self, name, taste, region,
-                 url, date_added, image_path):
+    def __init__(self, name, taste, region, url, date_added, image_path):
         self.name = name
         self.taste = taste
         self.region = region
@@ -32,8 +31,7 @@ class Drink(db.Model):
     date_added = db.Column(db.DATETIME)
     image_path = db.Column(db.String(50))
 
-    def __init__(self, name, taste, region,
-                 url, date_added, image_path):
+    def __init__(self, name, taste, region, url, date_added, image_path):
         self.name = name
         self.taste = taste
         self.region = region
@@ -43,3 +41,13 @@ class Drink(db.Model):
 
     def __repr__(self):
         return "<Drink: {}>".format(self.name)
+
+
+class FoodSchema(ma.ModelSchema):
+    class Meta:
+        model = Food
+
+
+class DrinkSchema(ma.ModelSchema):
+    class Meta:
+        model = Drink

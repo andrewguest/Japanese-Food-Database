@@ -29,8 +29,8 @@ CORS(app, resources={r"/api/*": {"origins": "*"}})
 #####################################################
 # These are imported here to avoid circular imports #
 #####################################################
-import models
 import schema
+import models
 import resources
 
 

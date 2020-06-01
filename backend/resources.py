@@ -5,8 +5,9 @@ from flask_restful import Resource, reqparse
 from flask import jsonify, json
 
 from api import db, app
-from schema import FoodSchema, DrinkSchema
-from models import Food, Drink
+
+# from schema import FoodSchema, DrinkSchema
+from models import Food, Drink, FoodSchema, DrinkSchema
 
 
 parser = reqparse.RequestParser()

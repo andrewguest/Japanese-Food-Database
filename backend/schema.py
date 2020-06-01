@@ -1,5 +1,5 @@
-import models
 from api import ma
+import models
 
 
 class FoodSchema(ma.ModelSchema):
