@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  db:
+    container_name: myjapandb-db
+    # Base image to start with
+    image: postgres:12.3
+    # Expose this port to linked services (not to the host)
+    expose: ["5432"]
+    volumes:
+      - ./database:/tmp
+    command: psql
+
+  api:
+    container_name: myjapandb-api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  web:
+    container_name: myjapandb-vue
+    build: .
+    command: bash -c "alembic upgrade head && uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
+    volumes:
+      - .:/code
+    ports:
+      - "8001:80"
+    depends_on:
+      - db
+      - api

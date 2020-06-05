@@ -1,4 +1,4 @@
-from api import db, ma
+from extensions import db
 
 
 class Food(db.Model):
@@ -41,13 +41,3 @@ class Drink(db.Model):
 
     def __repr__(self):
         return "<Drink: {}>".format(self.name)
-
-
-class FoodSchema(ma.ModelSchema):
-    class Meta:
-        model = Food
-
-
-class DrinkSchema(ma.ModelSchema):
-    class Meta:
-        model = Drink

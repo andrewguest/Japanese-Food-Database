@@ -4,7 +4,8 @@ import os
 from flask_restful import Resource, reqparse
 from flask import jsonify, json
 
-from api import db, app
+from api import app
+from extensions import db
 
 # from schema import FoodSchema, DrinkSchema
 from models import Food, Drink, FoodSchema, DrinkSchema

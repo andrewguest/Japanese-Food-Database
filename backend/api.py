@@ -2,15 +2,16 @@ import os
 
 from flask import Flask
 from flask_restful import Api
-from flask_sqlalchemy import SQLAlchemy
-from flask_marshmallow import Marshmallow
+
 from flask_cors import CORS
+
+import schema
+import models
 
 
 app = Flask(__name__)
 api = Api(app)
-db = SQLAlchemy(app)
-ma = Marshmallow(app)
+
 
 mariadb_uri = "mysql://{}:{}@localhost/Japan".format(
     os.getenv("MYSQL_USERNAME"), os.getenv("MYSQL_PASSWORD")
@@ -29,8 +30,6 @@ CORS(app, resources={r"/api/*": {"origins": "*"}})
 #####################################################
 # These are imported here to avoid circular imports #
 #####################################################
-import schema
-import models
 import resources
 
 
